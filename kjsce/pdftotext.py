@@ -5,6 +5,7 @@
 # open('dte.pdf', 'wb').write(r.content)
 
 import requests
+import convertapi
 
 def download_file_from_google_drive(id, destination):
     URL = "https://drive.google.com/uc?id=1_0IFxyTsKMiyBu_MMDRF782xXjl6AE12&export=download"
@@ -42,7 +43,7 @@ if __name__ == "__main__":
 
 
 
-import convertapi
+
 
 convertapi.api_secret = 'Gd31ajmvRrWrmKQv'
 
