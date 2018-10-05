@@ -54,7 +54,7 @@
             <div class="sidebar-wrapper">
                 <div class="logo">
                     <a href="http://www.creative-tim.com" class="simple-text">
-                        Creative Tim
+                        Barney and Bros
                     </a>
                 </div>
                 <ul class="nav">
@@ -74,36 +74,6 @@
                         <a class="nav-link" href="./table.html">
                             <i class="nc-icon nc-notes"></i>
                             <p>Table List</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="./typography.html">
-                            <i class="nc-icon nc-paper-2"></i>
-                            <p>Typography</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="./icons.html">
-                            <i class="nc-icon nc-atom"></i>
-                            <p>Icons</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="./maps.html">
-                            <i class="nc-icon nc-pin-3"></i>
-                            <p>Maps</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="./notifications.html">
-                            <i class="nc-icon nc-bell-55"></i>
-                            <p>Notifications</p>
-                        </a>
-                    </li>
-                    <li class="nav-item active active-pro">
-                        <a class="nav-link active" href="upgrade.html">
-                            <i class="nc-icon nc-alien-33"></i>
-                            <p>Upgrade to PRO</p>
                         </a>
                     </li>
                 </ul>
@@ -170,7 +140,7 @@
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#pablo">
+                                <a class="nav-link" href="{% url 'logout' %}">
                                     <span class="no-icon">Log out</span>
                                 </a>
                             </li>
@@ -181,6 +151,51 @@
             <!-- End Navbar -->
             <div class="content">
                 <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card ">
+                                <div class="card-header ">
+                                    <h4 class="card-title">Score Statistics</h4>
+                                    <p class="card-category">How the applicants performed in the previous event?</p>
+                                </div>
+                                <div class="card-body ">
+                                    <div id="chartPreferences" class="ct-chart ct-perfect-fourth"></div>
+                                </div>
+                                <div class="card-footer " style="text-align: center">
+                                    <div class="legend">
+                                        <i class="fa fa-circle text-info"></i> Excellent &nbsp;&nbsp;&nbsp;
+                                        <i class="fa fa-circle text-danger"></i> Great  <br>
+                                        <i class="fa fa-circle text-warning"></i> Room for improvement
+                                    </div>
+                                    <hr>
+                                    <div class="stats">
+                                        <i class="fa fa-clock-o"></i> Campaign sent 2 days ago
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card ">
+                                <div class="card-header ">
+                                    <h4 class="card-title">Events organized</h4>
+                                    <p class="card-category">How many events were organized on a monthly basis?</p>
+                                </div>
+                                <div class="card-body ">
+                                    <div id="chartHours" class="ct-chart"></div>
+                                </div>
+                                <div class="card-footer " style="text-align: center">
+                                    <div class="legend">
+                                        <i class="fa fa-circle text-info"></i> You
+                                        <i class="fa fa-circle text-danger"></i> Other Organizers
+                                    </div>
+                                    <hr>
+                                    <div class="stats">
+                                        <i class="fa fa-history"></i> Updated 3 minutes ago
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="row">
                         <!-- <div class="col-md-4">
                             <div class="card ">
@@ -242,8 +257,7 @@
                                         {% csrf_token %}
                                         <div class="form-group">
                                             <label>Event name</label>
-                                            <input type="text" class="form-control" name="name"
-                                            placeholder="Name of the event" value="">
+                                            <input type="text" class="form-control" name="name" placeholder="Name of the event" value="">
                                         </div>
                                         <div class="form-group">
                                             <label>Applicant list</label>
@@ -252,24 +266,21 @@
                                                 <i class="fa fa-upload"></i>
                                                 <span id="label_span">Upload CSV file</span>
                                             </label>
-                                            <input type="file" id="userfile" size="20"
-                                            style=" visibility: hidden;" name="csv_file">
+                                            <input type="file" id="userfile" size="20" style=" visibility: hidden;" name="csv_file">
 
                                             <div class="form-group">
                                                 <label>Languages</label>
-                                                <input type="text" class="form-control" name="language"
-                                                placeholder="Enter Languages seperated with a comma" value="">
+                                                <input type="text" class="form-control" name="language" placeholder="Enter Languages seperated with a comma" value="">
                                             </div>
 
                                             <div class="form-group">
                                                 <label>Skills</label>
-                                                <input type="text" class="form-control" name="skill"
-                                                placeholder="Enter Skills seperated with a comma" value="">
+                                                <input type="text" class="form-control" name="skill" placeholder="Enter Skills seperated with a comma" value="">
                                             </div>
                                             <div class="form-group">
                                                 <button type="submit" style="cursor: pointer" class="btn btn-warning">Submit</button>
                                             </div>
-                                        </form>
+                                    </form>
                                     </div>
                                     <div class="card-footer ">
                                         <!-- <div class="legend">
@@ -590,7 +601,7 @@
         // Javascript method's body can be found in assets/js/demos.js
         demo.initDashboardPageCharts();
 
-        demo.showNotification();
+        // demo.showNotification();
         $('#userfile').on("change", function (e) {
             var files = $(this)[0].files;
             if (files.length == 1) {
