@@ -18,7 +18,8 @@ from django.core.mail import send_mail
 from django.http import HttpResponse
 from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
-# Create your views here.
+import requests
+import os
 
 @login_required
 def upload_csv(request):
@@ -146,4 +147,15 @@ def user(request):
 @login_required
 def table(request):
     return render(request, 'screener/table.html')
+    
 
+def send_sms(request):
+    number = "9920776239"
+    message = "HI aayush"
+    key = os.environ['MSG91KEY'].strip()
+    urltosend = 'http://api.msg91.com/api/sendhttp.php?authkey=' + key + '&mobiles=' + number + '&message=' \
+        + message + '&sender=MSGIND&route=4'
+    print(urltosend)
+    r = requests.get(urltosend)
+    print(r.status_code)
+    return HttpResponse("done")

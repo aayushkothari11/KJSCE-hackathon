@@ -13,4 +13,5 @@ urlpatterns = [
     path('table/', table, name="table"),
     path('login/', login, name="login"),
     path('logout/', logout, name="logout"),
+    path('sms/', send_sms, name="send_sms")
 ]
