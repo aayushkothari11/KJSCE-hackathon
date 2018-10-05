@@ -7,5 +7,7 @@ from .views import *
 
 urlpatterns = [
     path('', upload_csv, name="uploadcsv"),
-    path('email/', email, name="email")
+    path('email/', email, name="email"),
+    path('login/', login, name="login"),
+    path('logout/', logout, name="logout"),
 ]

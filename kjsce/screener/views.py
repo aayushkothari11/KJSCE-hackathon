@@ -100,3 +100,31 @@ def email(request):
     to_email = ['aayushkothari11@yahoo.com',settings.EMAIL_HOST_USER]
     send_mail(subject, message, from_email, to_email, fail_silently = False)
     return HttpResponse("done")
+
+
+def user_login(request):
+    if request.user.is_authenticated:
+        redirect_url = ''
+        return HttpResponseRedirect(redirect_url)
+    else:
+        if request.method == 'POST':
+            username = request.POST.get('username', '')
+            password = request.POST.get('password', '')
+            user = authenticate(username=username, password=password)
+            if user:
+                if user.is_active:
+                    redirect_url = ''
+                    return HttpResponseRedirect(redirect_url)
+                else:
+                    error = 'Your account is disabled.'
+                    return render(request, 'screener/login.html', {'error': error})
+            else:
+                error = 'Incorrect Username or Password'
+                return render(request, 'screener/login.html', {'error': error})
+        else:
+            return render(request, 'screener/login.html', {})
+
+
+def logout(request):
+    auth_logout(request)
+    return redirect(reverse('screener:login'))
