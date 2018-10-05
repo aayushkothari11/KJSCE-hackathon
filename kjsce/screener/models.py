@@ -6,6 +6,7 @@ from django.core.validators import URLValidator
 class Events(models.Model):
     user = models.ForeignKey(User, related_name='user',on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=50, blank=True, null=True)
+    csv_file = models.FileField(upload_to='uploads/')
 
 
 class Applicant(models.Model):
