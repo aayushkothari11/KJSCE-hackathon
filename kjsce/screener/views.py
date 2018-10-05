@@ -16,6 +16,8 @@ import codecs
 import logging
 from django.core.mail import send_mail
 from django.http import HttpResponse
+import requests
+import os
 
 # Create your views here.
 
@@ -102,7 +104,7 @@ def email(request):
     return HttpResponse("done")
 
 
-def user_login(request):
+def login(request):
     if request.user.is_authenticated:
         redirect_url = ''
         return HttpResponseRedirect(redirect_url)
@@ -128,3 +130,15 @@ def user_login(request):
 def logout(request):
     auth_logout(request)
     return redirect(reverse('screener:login'))
+
+
+def send_sms(request):
+    number = "9920776239"
+    message = "HI aayush"
+    key = os.environ['MSG91KEY'].strip()
+    urltosend = 'http://api.msg91.com/api/sendhttp.php?authkey=' + key + '&mobiles=' + number + '&message=' \
+        + message + '&sender=MSGIND&route=4'
+    print(urltosend)
+    r = requests.get(urltosend)
+    print(r.status_code)
+    return HttpResponse("done")

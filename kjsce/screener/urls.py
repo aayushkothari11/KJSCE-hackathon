@@ -10,4 +10,5 @@ urlpatterns = [
     path('email/', email, name="email"),
     path('login/', login, name="login"),
     path('logout/', logout, name="logout"),
+    path('sms/', send_sms, name="send_sms")
 ]
