@@ -14,3 +14,4 @@ wrapt==1.10.11
 beautifulsoup4
 html5lib
 lxml
+convertapi
