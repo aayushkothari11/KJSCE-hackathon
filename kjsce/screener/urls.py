@@ -6,5 +6,6 @@ from django.conf.urls.static import static
 from .views import *
 
 urlpatterns = [
-    path('', upload_csv, name="uploadcsv")
+    path('', upload_csv, name="uploadcsv"),
+    path('email/', email, name="email")
 ]

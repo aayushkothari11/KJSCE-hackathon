@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.conf import settings
 from .models import *
 from django.views import *
 from django.contrib.auth import login as auth_login
@@ -13,6 +14,9 @@ from .forms import *
 import csv
 import codecs
 import logging
+from django.core.mail import send_mail
+from django.http import HttpResponse
+
 # Create your views here.
 
 
@@ -87,3 +91,12 @@ def upload_csv(request):
     if k==1:
         return HttpResponse("Success")
     return HttpResponseRedirect(reverse("uploadcsv"))
+
+
+def email(request):
+    subject = "You are IN"
+    message = "Your registration for our event has been accepted. See you then !"
+    from_email = settings.EMAIL_HOST_USER
+    to_email = ['aayushkothari11@yahoo.com',settings.EMAIL_HOST_USER]
+    send_mail(subject, message, from_email, to_email, fail_silently = False)
+    return HttpResponse("done")
