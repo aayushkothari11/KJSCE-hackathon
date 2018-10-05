@@ -18,12 +18,16 @@ import logging
 
 def upload_csv(request):
     data = {}
+    k=0
     if "GET" == request.method:
-        return render(request, 'upload_csv.html', data)
+        return render(request, 'screener/dashboard.html', data)
     # if not GET, then proceed
     try:
+        print("GHUSA")
         csv_file = request.FILES["csv_file"]
+        print(csv_file)
         name = request.POST.get('name', '')
+        print(name)
         if not csv_file.name.endswith('.csv'):
             print(1)
             messages.error(request,'File is not CSV type')
@@ -50,6 +54,12 @@ def upload_csv(request):
                 obj.user = request.user
                 obj.csv_file = csv_file
                 obj.save()
+                keywords = request.POST.get('keywords', '')
+                keywords = keywords.split(',')
+                for keyw in keywords:
+                    keyw.strip()
+                    key = Keyword(word = keyw, event = obj)
+                    key.save()
                 k=1
             else:
                 # print(form.errors)
@@ -59,8 +69,6 @@ def upload_csv(request):
             print(5)
             logging.getLogger("error_logger").error(repr(e))
             pass
-
-
         # here github part
         for line in lines:
             if i==0:
@@ -69,12 +77,10 @@ def upload_csv(request):
             if line == '':
                 break
             fields = line.split(",")
-
-
     except Exception as e:
         print(6)
         logging.getLogger("error_logger").error("Unable to upload file. "+repr(e))
         messages.error(request,"Unable to upload file. "+repr(e))
     if k==1:
         return HttpResponse("Success")
-    return HttpResponseRedirect(reverse("upload_csv"))
+    return HttpResponseRedirect(reverse("uploadcsv"))

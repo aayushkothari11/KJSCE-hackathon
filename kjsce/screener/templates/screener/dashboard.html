@@ -238,11 +238,12 @@
                                     <p class="card-category">Decide events and upload csv files to initiate screening process</p>
                                 </div>
                                 <div class="card-body ">
-                                    <form action="" id="myForm">
-
+                                    <form method="post" id="myForm" action="{% url 'uploadcsv' %}" enctype="multipart/form-data">
+                                        {% csrf_token %}
                                         <div class="form-group">
                                             <label>Event name</label>
-                                            <input type="text" class="form-control" placeholder="Name of the event" value="">
+                                            <input type="text" class="form-control" name="name"
+                                            placeholder="Name of the event" value="">
                                         </div>
                                         <div class="form-group">
                                             <label>Applicant list</label>
@@ -251,17 +252,18 @@
                                                 <i class="fa fa-upload"></i>
                                                 <span id="label_span">Upload CSV file</span>
                                             </label>
-                                            <input type="file" name="userfile" id="userfile" size="20" style=" visibility: hidden;">
-                                            <!-- <input type="button" id="upload" value="upload" class="button button2" /> </div> -->
+                                            <input type="file" id="userfile" size="20"
+                                            style=" visibility: hidden;" name="csv_file">
+
                                             <div class="form-group">
                                                 <label>Keywords</label>
-                                                <input type="text" class="form-control" placeholder="Enter keywords seperated with a comma" value="">
+                                                <input type="text" class="form-control" name="keywords"
+                                                placeholder="Enter keywords seperated with a comma" value="">
                                             </div>
                                             <div class="form-group">
                                                 <button type="submit" style="cursor: pointer" class="btn btn-warning">Submit</button>
                                             </div>
-                                            
-                                    </form>
+                                        </form>
                                     </div>
                                     <div class="card-footer ">
                                         <!-- <div class="legend">
@@ -475,13 +477,13 @@
                                     document.write(new Date().getFullYear())
                                 </script>
                                 <a href="">Barney and bros</a>, made with love for a better web
+                                <!--   -->
                             </p>
                         </nav>
                     </div>
                 </footer>
             </div>
         </div>
-        <!--   -->
         <!-- <div class="fixed-plugin">
     <div class="dropdown show-dropdown">
         <a href="#" data-toggle="dropdown">
@@ -600,7 +602,6 @@
         $("form :input").change(function () {
         });
         $('#myForm').on('submit', function (e) {
-            e.preventDefault();
             console.log('inputName=' + $('#userfile').val());
 
         });
