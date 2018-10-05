@@ -16,10 +16,11 @@ import codecs
 import logging
 from django.core.mail import send_mail
 from django.http import HttpResponse
-
+from django.contrib.auth import authenticate
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
-
+@login_required
 def upload_csv(request):
     data = {}
     k=0
@@ -102,18 +103,23 @@ def email(request):
     return HttpResponse("done")
 
 
-def user_login(request):
+def login(request):
     if request.user.is_authenticated:
-        redirect_url = ''
+        print(0)
+        redirect_url = '/events/'
         return HttpResponseRedirect(redirect_url)
     else:
         if request.method == 'POST':
+            print(1)
             username = request.POST.get('username', '')
             password = request.POST.get('password', '')
             user = authenticate(username=username, password=password)
             if user:
+                print(2)
                 if user.is_active:
-                    redirect_url = ''
+                    print(3)
+                    redirect_url = '/events/'
+                    auth_login(request, user)
                     return HttpResponseRedirect(redirect_url)
                 else:
                     error = 'Your account is disabled.'
@@ -127,4 +133,4 @@ def user_login(request):
 
 def logout(request):
     auth_logout(request)
-    return redirect(reverse('screener:login'))
+    return redirect(reverse('login'))
