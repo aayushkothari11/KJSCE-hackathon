@@ -8,6 +8,9 @@ from .views import *
 urlpatterns = [
     path('', upload_csv, name="uploadcsv"),
     path('email/', email, name="email"),
+    path('dashboard/', dashboard, name="dashboard"),
+    path('user/', user, name="user"),
+    path('table/', table, name="table"),
     path('login/', login, name="login"),
     path('logout/', logout, name="logout"),
 ]

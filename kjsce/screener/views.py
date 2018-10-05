@@ -25,7 +25,7 @@ def upload_csv(request):
     data = {}
     k=0
     if "GET" == request.method:
-        return render(request, 'screener/dashboard.html', data)
+        return render(request, 'screener/add_event.html', data)
     # if not GET, then proceed
     try:
         print("GHUSA")
@@ -134,3 +134,16 @@ def login(request):
 def logout(request):
     auth_logout(request)
     return redirect(reverse('login'))
+
+@login_required
+def dashboard(request):
+    return render(request, 'screener/dashboard.html')
+
+@login_required
+def user(request):
+    return render(request, 'screener/user.html')
+
+@login_required
+def table(request):
+    return render(request, 'screener/table.html')
+
