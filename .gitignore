@@ -7,4 +7,5 @@ media/
 db.sqlite3
 .flake8
 .idea
+.env
 
