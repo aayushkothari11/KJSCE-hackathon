@@ -54,8 +54,11 @@ def upload_csv(request):
                 obj.user = request.user
                 obj.csv_file = csv_file
                 obj.save()
-                keywords = request.POST.get('keywords', '')
-                keywords = keywords.split(',')
+                language = request.POST.get('language', '')
+                skill = request.POST.get('skill', '')
+                language = language.split(',')
+                skill = skill.split(',')
+                keywords = language+skill
                 for keyw in keywords:
                     keyw.strip()
                     key = Keyword(word = keyw, event = obj)
