@@ -9,6 +9,7 @@ from django.http import HttpResponseRedirect,HttpResponse
 from django.http import Http404
 from django.contrib.auth import authenticate
 from django.urls import reverse
+from .forms import *
 import csv
 import codecs
 import logging
@@ -22,6 +23,7 @@ def upload_csv(request):
     # if not GET, then proceed
     try:
         csv_file = request.FILES["csv_file"]
+        name = request.POST.get('name', '')
         if not csv_file.name.endswith('.csv'):
             print(1)
             messages.error(request,'File is not CSV type')
@@ -36,7 +38,30 @@ def upload_csv(request):
 
         lines = file_data.split("\n")
         i=0
-		#loop over the lines and save them in db. If error , store as string and then display
+        data_dict = {}
+        data_dict["name"] = name
+        try:
+            form = EventForm(data_dict)
+            print('------------------------------------------')
+            # print(form.fields['created_by'])
+            if form.is_valid():
+                print(3)
+                obj = form.save()
+                obj.user = request.user
+                obj.csv_file = csv_file
+                obj.save()
+                k=1
+            else:
+                # print(form.errors)
+                print(4)
+                logging.getLogger("error_logger").error(form.errors.as_json())
+        except Exception as e:
+            print(5)
+            logging.getLogger("error_logger").error(repr(e))
+            pass
+
+
+        # here github part
         for line in lines:
             if i==0:
                 i=1
@@ -44,23 +69,7 @@ def upload_csv(request):
             if line == '':
                 break
             fields = line.split(",")
-            data_dict = {}
-            try:
-                form = MemberForm(data_dict)
-                print('------------------------------------------')
-                # print(form.fields['created_by'])
-                if form.is_valid():
-                    print(3)
 
-                    k=1
-                else:
-                    # print(form.errors)
-                    print(4)
-                    logging.getLogger("error_logger").error(form.errors.as_json())
-            except Exception as e:
-                print(5)
-                logging.getLogger("error_logger").error(repr(e))
-                pass
 
     except Exception as e:
         print(6)
