@@ -1,3 +1,71 @@
 from django.shortcuts import render
-
+from .models import *
+from django.views import *
+from django.contrib.auth import login as auth_login
+from django.contrib.auth import logout as auth_logout
+from django.shortcuts import redirect,render_to_response
+from django.contrib import messages
+from django.http import HttpResponseRedirect,HttpResponse
+from django.http import Http404
+from django.contrib.auth import authenticate
+from django.urls import reverse
+import csv
+import codecs
+import logging
 # Create your views here.
+
+
+def upload_csv(request):
+    data = {}
+    if "GET" == request.method:
+        return render(request, 'upload_csv.html', data)
+    # if not GET, then proceed
+    try:
+        csv_file = request.FILES["csv_file"]
+        if not csv_file.name.endswith('.csv'):
+            print(1)
+            messages.error(request,'File is not CSV type')
+            return HttpResponseRedirect(reverse("upload_csv"))
+        #if file is too large, return
+        if csv_file.multiple_chunks():
+            print(2)
+            messages.error(request,"Uploaded file is too big (%.2f MB)." % (csv_file.size/(1000*1000),))
+            return HttpResponseRedirect(reverse("upload_csv"))
+
+        file_data = csv_file.read().decode("utf-8")
+
+        lines = file_data.split("\n")
+        i=0
+		#loop over the lines and save them in db. If error , store as string and then display
+        for line in lines:
+            if i==0:
+                i=1
+                continue
+            if line == '':
+                break
+            fields = line.split(",")
+            data_dict = {}
+            try:
+                form = MemberForm(data_dict)
+                print('------------------------------------------')
+                # print(form.fields['created_by'])
+                if form.is_valid():
+                    print(3)
+
+                    k=1
+                else:
+                    # print(form.errors)
+                    print(4)
+                    logging.getLogger("error_logger").error(form.errors.as_json())
+            except Exception as e:
+                print(5)
+                logging.getLogger("error_logger").error(repr(e))
+                pass
+
+    except Exception as e:
+        print(6)
+        logging.getLogger("error_logger").error("Unable to upload file. "+repr(e))
+        messages.error(request,"Unable to upload file. "+repr(e))
+    if k==1:
+        return HttpResponse("Success")
+    return HttpResponseRedirect(reverse("upload_csv"))
