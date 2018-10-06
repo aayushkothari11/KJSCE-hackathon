@@ -21,6 +21,7 @@ from django.contrib.auth.decorators import login_required
 import requests
 import os
 from .all import final_score
+import pandas as pd
 
 @login_required
 def upload_csv(request):
@@ -38,16 +39,17 @@ def upload_csv(request):
         if not csv_file.name.endswith('.csv'):
             print(1)
             messages.error(request,'File is not CSV type')
-            return HttpResponseRedirect(reverse("upload_csv"))
+            return HttpResponseRedirect(reverse("uploadcsv"))
         #if file is too large, return
         if csv_file.multiple_chunks():
             print(2)
             messages.error(request,"Uploaded file is too big (%.2f MB)." % (csv_file.size/(1000*1000),))
-            return HttpResponseRedirect(reverse("upload_csv"))
+            return HttpResponseRedirect(reverse("uploadcsv"))
 
         # file_data = csv_file.read().decode("utf-8")
 
         # lines = file_data.split("\n")
+
         i=0
         data_dict = {}
         data_dict["name"] = name
