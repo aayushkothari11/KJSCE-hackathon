@@ -43,7 +43,7 @@
     </style>
 </head>
 
-<body>
+<body style="overflow-x: hidden;">
     <div class="wrapper">
             <div class="sidebar" data-image="../../static/screener/img/sidebar-5.jpg">
                 <!--
@@ -121,11 +121,11 @@
                     </div>
                 </nav>
             <!-- End Navbar -->
-            <div class="content">
+            <div class="content" style="overflow-x: hidden;overflow-y: hidden;">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-6" style="margin:auto">
-                            <div class="card " style="text-align: center">
+                            <div class="card " style="text-align: center" >
                                 <div class="card-header ">
                                     <h4 class="card-title">Screening Automator</h4>
                                     <p class="card-category">Decide events and upload csv files to initiate screening process</p>
@@ -175,7 +175,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="container">
+                    <div class="container" id="loader" style="margin-top: -250px;margin-right: -360px; visibility: hidden ;position : absoulte;">
                         <div class="lds-css ng-scope">
                             <div style="width:100%;height:100%" class="lds-pacman">
                                 <div>
@@ -364,7 +364,9 @@
     $(document).ready(function () {
         // Javascript method's body can be found in assets/js/demos.js
         demo.initDashboardPageCharts();
-
+        // $("#loader").css({"margin-top": "-300px;"});
+        // $('#loader').hide();
+        
         // demo.showNotification();
         $('#userfile').on("change", function (e) {
             var files = $(this)[0].files;
@@ -384,7 +386,9 @@
         });
         $('#myForm').on('submit', function (e) {
             console.log('inputName=' + $('#userfile').val());
-
+            // $("#loader").css({"margin-top": "-300px;"});
+            $('#myForm').css("opacity", "0.3");
+            $('#loader').css("visibility", "visible");
         });
     });
 </script>

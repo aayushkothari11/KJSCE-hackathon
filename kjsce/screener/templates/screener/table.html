@@ -98,6 +98,12 @@
             </nav>
             <!-- End Navbar -->
             <div class="content">
+                <div class="alert alert-success">
+                    <strong>Success!</strong> Applicants successfully received their notifications
+                </div>
+                <div class="alert alert-danger">
+                        <strong>Alert!</strong> Something went wrong
+                    </div>
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12">
@@ -121,93 +127,43 @@
                                                 <td>Third</td>
                                                 <td>7.15</td>
                                             </tr>
-                                            <tr>
-                                                <td>Fenil Doshi</td>
-                                                <td>D. J. Sanghvi College of Engineering</td>
-                                                <td>Second</td>
-                                                <td>9.81</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Purvil Jain</td>
-                                                <td>D. J. Sanghvi College of Engineering</td>
-                                                <td>Third</td>
-                                                <td>8.56</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Parth Doshi Jain</td>
-                                                <td>D. J. Sanghvi College of Engineering</td>
-                                                <td>Second</td>
-                                                <td>9.89</td>
-                                            </tr>
                                         </tbody>
                                     </table>
-                                    <button class="btn btn-primary" type="button" id="downloadButton" style="cursor: pointer;">Download csv</button>
                                 </div>
+
                             </div>
                         </div>
-                        <!-- <div class="col-md-12">
-                            <div class="card card-plain table-plain-bg">
-                                <div class="card-header ">
-                                    <h4 class="card-title">Table on Plain Background</h4>
-                                    <p class="card-category">Here is a subtitle for this table</p>
-                                </div>
-                                <div class="card-body table-full-width table-responsive">
-                                    <table class="table table-hover">
-                                        <thead>
-                                            <th>ID</th>
-                                            <th>Name</th>
-                                            <th>Salary</th>
-                                            <th>Country</th>
-                                            <th>City</th>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Dakota Rice</td>
-                                                <td>$36,738</td>
-                                                <td>Niger</td>
-                                                <td>Oud-Turnhout</td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>Minerva Hooper</td>
-                                                <td>$23,789</td>
-                                                <td>Curaçao</td>
-                                                <td>Sinaai-Waas</td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td>Sage Rodriguez</td>
-                                                <td>$56,142</td>
-                                                <td>Netherlands</td>
-                                                <td>Baileux</td>
-                                            </tr>
-                                            <tr>
-                                                <td>4</td>
-                                                <td>Philip Chaney</td>
-                                                <td>$38,735</td>
-                                                <td>Korea, South</td>
-                                                <td>Overland Park</td>
-                                            </tr>
-                                            <tr>
-                                                <td>5</td>
-                                                <td>Doris Greene</td>
-                                                <td>$63,542</td>
-                                                <td>Malawi</td>
-                                                <td>Feldkirchen in Kärnten</td>
-                                            </tr>
-                                            <tr>
-                                                <td>6</td>
-                                                <td>Mason Porter</td>
-                                                <td>$78,615</td>
-                                                <td>Chile</td>
-                                                <td>Gloucester</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                        <!-- <div class="col-md-3"></div> -->
+
+                        <div class="col-md-12" style="text-align: center">
+                            <button class="btn btn-primary" type="button" id="downloadButton" style="cursor: pointer;">Download csv</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-md-5" style="margin:auto">
+                        <div class="card " style="text-align: center">
+                            <div class="card-header ">
+                                <h4 class="card-title" style="border-bottom: 1px solid black;">Choose number of Applicants to select</h4>
+                                <!-- <p class="card-category">Use the screening automator platform now!</p> -->
                             </div>
-                        </div> -->
+                            <div class="card-body ">
+                                <form method="post" id="myForm" action="{% url 'login' %}" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <br>
+                                    <div class="form-group">
+                                        <label>Number of applicants</label>
+                                        <input type="number" class="form-control" name="username" placeholder="Enter the number of top applicants" value="">
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" style="cursor: pointer" class="btn btn-warning">Send notifications</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -350,7 +306,7 @@
 
 <script>
     $(document).ready(function () {
-        
+
         $("#downloadButton").click(function () {
             console.log('clicked');
             //$("#tab").table2csv('output', {appendTo: '#out'});
