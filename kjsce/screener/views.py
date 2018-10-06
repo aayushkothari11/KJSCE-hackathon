@@ -138,14 +138,15 @@ def logout(request):
 
 
 def send_sms(request):
-    number = "9920776239"
+    number = ["9920776239", "9619227299", "7977529093"]
     message = "HI aayush"
     key = os.environ['MSG91KEY'].strip()
-    urltosend = 'http://api.msg91.com/api/sendhttp.php?authkey=' + key + '&mobiles=' + number + '&message=' \
-        + message + '&sender=MSGIND&route=4'
-    print(urltosend)
-    r = requests.get(urltosend)
-    print(r.status_code)
+    for i in range(0,range(len(number))):
+        urltosend = 'http://api.msg91.com/api/sendhttp.php?authkey=' + key + '&mobiles=' + number[i] + '&message=' \
+            + message + '&sender=MSGIND&route=4'
+        print(urltosend)
+        r = requests.get(urltosend)
+        print(r.status_code)
     return HttpResponse("done")
 
 
