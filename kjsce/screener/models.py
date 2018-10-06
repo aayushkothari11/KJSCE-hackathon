@@ -5,10 +5,11 @@ from django.core.validators import MinValueValidator
 from django.core.validators import MaxValueValidator
 
 
+
 class Event(models.Model):
     user = models.ForeignKey(User, related_name='user',on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=50, blank=True, null=True)
-    csv_file = models.FileField(upload_to='uploads/')
+    csv_file = models.FileField(upload_to='uploads/',null=True,blank=True)
     date = models.DateField(blank=True, null=True)
 
     def __str__(self):

@@ -102,7 +102,8 @@ def upload_csv(request):
         logging.getLogger("error_logger").error("Unable to upload file. "+repr(e))
         messages.error(request,"Unable to upload file. "+repr(e))
     if k==1:
-        return HttpResponse("Success")
+        redirect_url = '/tables/' + str(obj.pk) + '/'
+        return HttpResponseRedirect(redirect_url)
     return HttpResponseRedirect(reverse("uploadcsv"))
 
 
@@ -156,14 +157,44 @@ def user(request):
     return render(request, 'screener/user.html')
 
 @login_required
-def table(request):
-    return render(request, 'screener/table.html')
-
+def table(request,pk):
+    if request.method == 'GET':
+        event = Event.objects.get(pk=pk)
+        applicants = Applicant.objects.filter(event=event)
+        applicants = sorted(applicants, key=lambda x: x.score, reverse=True)
+        return render(request, 'screener/table.html',{'applicants':applicants,'id':pk})
+    else:
+        number = request.POST.get('number','')
+        print(number)
+        print(type(number))
+        numbers = int(number)
+        event = Event.objects.get(pk=pk)
+        applicants = Applicant.objects.filter(event=event)
+        applicants = sorted(applicants, key=lambda x: x.score, reverse=True)
+        applicants = applicants[0:numbers]
+        to_email = []
+        number = []
+        for i in range(0,numbers):
+            to_email.append(applicants[i].email)
+            number.append(applicants[i].number)
+        message = "Your registration has been accepted!!"
+        key = '241331A8wh9vI5SO5bb7c684'
+        for i in range(0,len(number)):
+            urltosend = 'http://api.msg91.com/api/sendhttp.php?authkey=' + key + '&mobiles=' + str(number[i]) + '&message=' \
+                + message + '&sender=MSGIND&route=4'
+            print(urltosend)
+            r = requests.get(urltosend)
+            print(r.status_code)
+        subject = "You are IN"
+        message = "Your registration for our event has been accepted. See you then !"
+        from_email = settings.EMAIL_HOST_USER
+        send_mail(subject, message, from_email, to_email, fail_silently = False)
+        return render(request, 'screener/table.html',{'applicants':applicants,'id':pk})
 
 def send_sms(request):
     number = ["9920776239", "9619227299", "7977529093"]
-    message = "HI aayush"
-    key = os.environ['MSG91KEY'].strip()
+    message = "Your registration has been accepted!!"
+    key = '241331A8wh9vI5SO5bb7c684'
     for i in range(0,range(len(number))):
         urltosend = 'http://api.msg91.com/api/sendhttp.php?authkey=' + key + '&mobiles=' + number[i] + '&message=' \
             + message + '&sender=MSGIND&route=4'
