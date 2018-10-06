@@ -138,7 +138,7 @@
                                         <div class="col-md-6 pr-1">
                                             <label>Github</label>
                                             <br>
-                                            <a href="https://github.com/purviljain">{{applicant.github_url}}</a>
+                                            <a href="{{applicant.github_url}}">{{applicant.github_url}}</a>
                                         </div>
 
                                     </div>
@@ -158,9 +158,9 @@
                                     <br>
                                     <div class="row">
                                         <div class="col-md-6 pr-1">
-                                            <label>Linkedin</label>
+                                            <label>Quora</label>
                                             <br>
-                                            <a href="https://linkedin.com/in/purvil-jain-56684714b/">https://linkedin.com/in/purvil-jain-56684714b/</a>
+                                            <a href="{{applicant.quora_url}}">{{applicant.quora_url}}</a>
                                         </div>
                                     </div>
                                     <br>
@@ -186,11 +186,10 @@
                                             <h4 style="font-weight:600; margin-top: -10px;color: rgb(64, 101, 138)" class="title">{{applicant.name}}</h4>
                                         </p>
                                     </div>
-                                    <p class="description text-center">
+                                    <div class="description text-center" style="text-align:center">
                                         "Learner and programmer"
-                                        <!-- <br> Your chick she so thirsty
-                                        <br> I'm in that two seat Lambo" -->
-                                    </p>
+                                        <h2>Score: {{applicant.score}}</h2>
+                                    </div>
                                 </div>
                                 <hr>
                                 <div class="button-container mr-auto ml-auto">
