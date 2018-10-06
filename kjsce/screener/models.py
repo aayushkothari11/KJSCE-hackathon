@@ -12,7 +12,7 @@ class Event(models.Model):
     date = models.DateField(blank=True, null=True)
 
     def __str__(self):
-        return name
+        return self.name
 
 
 class Applicant(models.Model):
