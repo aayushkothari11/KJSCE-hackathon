@@ -20,7 +20,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
 import requests
 import os
-from .all import final_score
+from .all import final_score, get_user_info_git
 import pandas as pd
 
 @login_required
@@ -152,8 +152,10 @@ def dashboard(request):
     return render(request, 'screener/dashboard.html')
 
 @login_required
-def user(request):
-    return render(request, 'screener/user.html')
+def user(request, pk):
+    applicant = Applicant.objects.get(pk=pk)
+    extra_data = get_user_info_git(applicant.github_url)[1]
+    return render(request, 'screener/user.html', {'user': applicant, 'repo_data': extra_data})
 
 @login_required
 def table(request,pk):
