@@ -14,6 +14,7 @@ from nltk.corpus import stopwords
 import textrazor
 from dandelion import DataTXT
 import math
+from .models import Applicant
 
 def preprocessing(text):
    # text = text.decode("utf8")
@@ -76,17 +77,17 @@ def get_user_info_git(user_link):
     try:
         username = user_link.strip('/').split("/")[-1]
         user = g.get_user(username)
-        for r in user.get_repos():
+        for r in user.get_repos().sort(key=forks_count, reverse=True):
             temp = []
             temp.append(r.name)
             sample += r.name + ' '
             sample += str(r.language) + ' '
             temp.append(r.language)
             try:
-                temp.append(base64.b64decode(r.get_readme().content))
+                # temp.append(base64.b64decode(r.get_readme().content))
                 sample += str(base64.b64decode(r.get_readme().content)) + ' '
             except GithubException:
-                temp.append('')
+                sample.append('')
             try:
                 sample += "".join(r.get_topics()) + ' '
             except GithubException:
@@ -99,7 +100,7 @@ def get_user_info_git(user_link):
         return None
     # print(type(sample))
     # return sample
-    return preprocessing(sample)
+    return [preprocessing(sample), repos]
 
 
 def get_user_info_quora(user_link):
@@ -130,100 +131,116 @@ def get_user_info_quora(user_link):
 
 	    return ', '.join(words)
 
-textrazor.api_key = "9dcd16199684c470157ce02dc8ced9357b28f61dd685df6acc8dfd62"
-infocsv = pd.read_csv('info.csv', header=None)
-print("INFOOOO")
-print(infocsv.shape)
-print(infocsv.iloc[2,2])
-dandelionclient = DataTXT(app_id = '9355e03c7d5e4b879e6af9d8575159d2', app_key = '9355e03c7d5e4b879e6af9d8575159d2')
-keywords = "reactjs, react.js, redux, React.js"
 
-a=[0]*3
+def final_score(event, keywords):
 
-for count in range(infocsv.shape[0]):
-	gitlink = str(infocsv.iloc[count,0])
-	if(gitlink == "nan"):
-		break
-	quoralink = infocsv.iloc[count,1]
-	cvlink = str(infocsv.iloc[count,2])
-	print("CVLINK")
-	print(cvlink)
+	textrazor.api_key = "9dcd16199684c470157ce02dc8ced9357b28f61dd685df6acc8dfd62"
+	infocsv = pd.read_csv(event.csv_file.path, header=None)
+	print("INFOOOO")
+	print(infocsv.shape)
+	print(infocsv.iloc[2,2])
+	dandelionclient = DataTXT(app_id = '9355e03c7d5e4b879e6af9d8575159d2', app_key = '9355e03c7d5e4b879e6af9d8575159d2')
+	# keywords = "reactjs, react.js, redux, React.js"
 
-	print("RESUME INFO")
-	if __name__ == "__main__":
-	    words = cvlink.split('/')
-	    file_id = words[len(words)-2]
-	    destination = './t3.pdf'
-	    download_file_from_google_drive(file_id, destination)
+	a=[]
+	output_data = []
 
-	convertapi.api_secret = 'Gd31ajmvRrWrmKQv'
-	result = convertapi.convert('txt', { 'File': './t3.pdf' })
-	result.file.save("./file1.txt")
+	for count in range(infocsv.shape[0]):
+		applicant = Applicant()
+		applicant.name = str(infocsv.iloc[count, 0])
+		applicant.college = str(infocsv.iloc[count, 1])
+		applicant.email = str(infocsv.iloc[count, 2])
+		applicant.github_url = str(infocsv.iloc[count,3])
+		if(applicant.github_url == "nan"):
+			applicant.delete()
+			break
+		applicant.quora_url = infocsv.iloc[count,4]
+		applicant.resume_link = str(infocsv.iloc[count,5])
+		applicant.number = infocsv.iloc[count, 6]
+		applicant.event = obj
+		applicant.save()
+		print("CVLINK")
+		print(cvlink)
 
-	f1 = open("file1.txt", "r", encoding="utf8")
-	resumeinfo = f1.read()
-	print(resumeinfo)
-	print("="*100)
-	try:
-		client = textrazor.TextRazor(extractors=["entities", "topics"])
-		response = client.analyze(resumeinfo)
-		related_keyword_resume=[]
-		for topic in response.topics():
-			if topic.score>0.7:
-				related_keyword_resume.append(topic.label)
-		rel_key_resume=', '.join(related_keyword_resume)
-		print(rel_key_resume)
-		r = dandelionclient.sim(rel_key_resume, keywords, lang="en", bow="one_empty")
-		resumesimilarity = r.similarity*25
-	except:
-		resumesimilarity = 0
-	print("--"*100)
+		print("RESUME INFO")
+		if __name__ == "__main__":
+		    words = cvlink.split('/')
+		    file_id = words[len(words)-2]
+		    destination = './templates/screener/resumes/' + applicant.email + '.pdf'
+		    download_file_from_google_drive(file_id, destination)
 
-	print("QUORA INFO")
-	quorainfo = get_user_info_quora(quoralink)
-	print(quorainfo)
-	print("="*100)
-	if(quorainfo is not ""):
+		convertapi.api_secret = 'Gd31ajmvRrWrmKQv'
+		result = convertapi.convert('txt', { 'File': './templates/screener/resumes/' + applicant.email + '.pdf' })
+		result.file.save('./templates/screener/resumes/' + applicant.email + '.txt')
+
+		f1 = open('./templates/resumes/' + applicant.email + '.txt', "r", encoding="utf8")
+		resumeinfo = f1.read()
+		print(resumeinfo)
+		print("="*100)
 		try:
-			client = textrazor.TextRazor(extractors=["topics"])
-			response = client.analyze(quorainfo)
-			related_keyword_qra=[]
+			client = textrazor.TextRazor(extractors=["entities", "topics"])
+			response = client.analyze(resumeinfo)
+			related_keyword_resume=[]
 			for topic in response.topics():
 				if topic.score>0.7:
-					related_keyword_qra.append(topic.label)
-			rel_key_quora=', '.join(related_keyword_qra)
-			print(rel_key_quora)
-			r = dandelionclient.sim(rel_key_quora, keywords, lang="en", bow="one_empty")
-			quorasimilarity = r.similarity*15
-		except Exception as e:
-			print(e)
-			quorasimilarity = 0
-	else:
-		quorasimilarity = 0
-	print("--"*100)
-
-	print("GITHUB INFO")
-	g = Github(config('GITHUB_USER'), config('GITHUB_PASS'))
-	gitinfo = get_user_info_git(gitlink)
-	print(gitinfo)
-	print("=="*100)
-	try:
-		client = textrazor.TextRazor(extractors=["topics"])
-		response = client.analyze(gitinfo)
-		related_keyword_git=[]
-		for topic in response.topics():
-			if topic.score>0.7:
-				related_keyword_git.append(topic.label)
-		rel_key_git=', '.join(related_keyword_git)
-		print(rel_key_git)
+					related_keyword_resume.append(topic.label)
+			rel_key_resume=', '.join(related_keyword_resume)
+			print(rel_key_resume)
+			r = dandelionclient.sim(rel_key_resume, keywords, lang="en", bow="one_empty")
+			resumesimilarity = r.similarity*25
+		except:
+			resumesimilarity = 0
 		print("--"*100)
-		r = dandelionclient.sim(rel_key_git, keywords, lang="en", bow="one_empty")
-		gitsimilarity = r.similarity*60
-	except:
-		gitsimilarity = 0
-	print("+"*100)
-	print(quorasimilarity, resumesimilarity, gitsimilarity)
-	a[count]=quorasimilarity+resumesimilarity+gitsimilarity
 
+		print("QUORA INFO")
+		quorainfo, extra_data = get_user_info_quora(applicant.quora_url)
+		print(quorainfo)
+		print("="*100)
+		if(quorainfo is not ""):
+			try:
+				client = textrazor.TextRazor(extractors=["topics"])
+				response = client.analyze(quorainfo)
+				related_keyword_qra=[]
+				for topic in response.topics():
+					if topic.score>0.7:
+						related_keyword_qra.append(topic.label)
+				rel_key_quora=', '.join(related_keyword_qra)
+				print(rel_key_quora)
+				r = dandelionclient.sim(rel_key_quora, keywords, lang="en", bow="one_empty")
+				quorasimilarity = r.similarity*15
+			except Exception as e:
+				print(e)
+				quorasimilarity = 0
+		else:
+			quorasimilarity = 0
+		print("--"*100)
 
-print(a)
+		print("GITHUB INFO")
+		g = Github(config('GITHUB_USER'), config('GITHUB_PASS'))
+		gitinfo = get_user_info_git(applicant.github_url)
+		print(gitinfo)
+		print("=="*100)
+		try:
+			client = textrazor.TextRazor(extractors=["topics"])
+			response = client.analyze(gitinfo)
+			related_keyword_git=[]
+			for topic in response.topics():
+				if topic.score>0.7:
+					related_keyword_git.append(topic.label)
+			rel_key_git=', '.join(related_keyword_git)
+			print(rel_key_git)
+			print("--"*100)
+			r = dandelionclient.sim(rel_key_git, keywords, lang="en", bow="one_empty")
+			gitsimilarity = r.similarity*60
+		except:
+			gitsimilarity = 0
+		print("+"*100)
+		print(quorasimilarity, resumesimilarity, gitsimilarity)
+		a.append(quorasimilarity+resumesimilarity+gitsimilarity)
+		applicant.score = a[-1]
+		applicant.save()
+		output.append(applicant)
+
+	output.sort(key=lambda x: x.score, reverse=True)
+	print(a)
+	return output
