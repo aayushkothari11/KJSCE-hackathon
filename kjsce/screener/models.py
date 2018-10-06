@@ -25,6 +25,7 @@ class Applicant(models.Model):
     number = models.BigIntegerField(validators=[MaxValueValidator(9999999999),MinValueValidator(1000000000)], blank=True, null=True)
     score = models.IntegerField(null=True, blank=True)
     event = models.ForeignKey(Event, blank=True, null=True,on_delete=models.CASCADE)
+    college = models.CharField(max_length=100, blank=True, null=True)
 
 
 class Keyword(models.Model):
