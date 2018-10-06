@@ -18,6 +18,7 @@ class Event(models.Model):
 
 class Applicant(models.Model):
     github_url = models.TextField(validators=[URLValidator()], null=True, blank=True)
+    name = models.CharField(max_length=50, null=True, blank=True)
     quora_url = models.TextField(validators=[URLValidator()], null=True, blank=True)
     resume_link = models.TextField(validators=[URLValidator()], null=True, blank=True)
     text_result = models.CharField(max_length=1000, blank=True, null=True)

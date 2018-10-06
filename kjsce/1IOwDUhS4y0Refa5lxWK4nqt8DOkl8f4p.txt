@@ -1,0 +1,106 @@
+AYUSH KOTHARI
+Student
+
+
+aayushkothari11@yahoo.com                                                                            +91-9920776239
+
+1C,223,Kalpataru Gardens,Kandivali East, Mumbai, India                                     aayushkothari11.github.io/
+
+linkedin.com/in/ayush-kothari-94b83614b                                                          
+github.com/aayushkothari11
+
+
+WORK EXPERIENCE
+Software Development Intern
+Falkonry
+06/2018 – 08/2018
+SKILLS
+Django       Python       C       C++       HTML       CSS JavaScript       Java       NodeJS       Bootstrap       
+jQuery
+
+Django Developer
+GetMeLive
+04/2018 – Present Achievements/Tasks
+Working on several django related projects
+
+
+Web Developer
+Apro Green Tech
+01/2018 – 04/2018
+Achievements/Tasks
+Developed and maintained the website
+
+
+
+
+Mumbai
+Data Structures       Algorithms
+
+
+
+PERSONAL PROJECTS
+Student Information Portal
+Made a student information portal which can be used by Teachers and Recruiters. URL : 
+https://github.com/djunicode/DJ-Comps- Student-Info-Portal
+
+
+DJACM website
+Website for ACM chapter of my college. URL : https://github.com/aayushkothari11/DJACM-Website
+
+
+
+Django Developer
+DJ Unicode
+09/2017 – 05/2018
+Achievements/Tasks
+Worked on the Information portal of our college
+
+
+
+EDUCATION
+Computer Engineering
+Dwarkadas J.Sanghvi college of Engineering
+Refugee Database System
+It is a database system which stores information about refugees all round the world. URL : 
+https://github.com/aayushkothari11/CodeShashtra-Round1- Refugee-Database
+
+
+Jargon Forum
+Made at a hackathon, it is a question answer jargon forum using Django. URL : 
+https://bitbucket.org/aayushkothari11/codeshastra- round0/src/master/
+
+
+
+ACHIEVEMENTS
+
+2016 – 2020
+Courses
+CGPA : 9.38
+Achieved 3rd rank in my school in 10th grade.
+
+Data Structurs                             Analysis of Algorithms
+Operating Systems                      Object Oriented Programming
+
+
+High School
+Thakur college of Scienceand Commerce
+
+Selected for initial challenger course in Android by GOOGLE/UDACITY
+
+Successfully completed the Applied CS with android course oﬀered by GOOGLE
+
+2014 – 2016
+
+
+School
+Childrens Academy
+2004 – 2014
+HSC : 88.46%
+
+
+
+
+
+SSC : 95.2%
+INTERESTS
+Football       Competitive Programming        Movies  TV Series        Reading about new trends in Technology

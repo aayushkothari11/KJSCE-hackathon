@@ -1,0 +1,37 @@
+PURVIL JAIN
+1905, Ganesh Kripa, Sadashiv X-lane, Mumbai 400004 | (+91) 9619227299 | jainpurvil98@gmail.com
+
+C A R E E R   O B J E C T I V E
+Energetic and passionate college student aiming to use my knowledge to satisfy the development internship at your 
+company.
+
+E D U C A T I O N
+DWARKADAS  J . SANGHVI  COLLEGE  OF  ENGINEERING  ( B. E.)
+     CGPA: SEM 1 - 9. 48/10            SEM 2 - 9.59/10                   SEM 3 - 10/10
+
+S K I L L S
+PROGRAMMING  LANGUAGES
+     C, C++, Java, Python WEB  DEVELOPMENT
+     HTML5, CSS3, SASS, Bootstrap, VanillaJS, jQuery, ReactJs, AJAX, Node.js, Express.js, MongoDB, Django (learning) 
+and WordPress.
+ANDROID  APP  DEVELOPMENT
+     Android Studio/Java, Firebase COMPETITIVE  CODING
+     https://www.codechef.com/users/purvil_jain
+
+P R O J E C T S
+     A fully functional Refugee Database system and jargon forum using django
+     A CSV to JSON online converter using Node.js and Express Github profile link to all projects: 
+https://github.com/purviljain UNDER  PHIONIKE  SOLUTIONS
+     A WordPress based website.
+     Worked on 3 projects with Node/Express/MongoDB backend.
+
+E X P E R I E N C E /  A C H I E V E M E N T S
+FULL  STACK  DEVELOPER  AT  PHIONIKE  SOLUTIONS
+     3 Months (Jan–March 2018) GOOGLE  ACSWA
+     Successfully completed the Applied CS with Android course offered by Google through a workshop in college
+GOOGLE/ UDACITY
+     Selected for the initial challenger course in Mobile web intermediate course under the Google reskilling India 
+program.
+DJUNICODE
+     Created a platform created for students to exchange books online. LinkedIn profile: 
+https://www.linkedin.com/in/purvil-jain-56684714b

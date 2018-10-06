@@ -187,7 +187,7 @@ demo = {
         Chartist.Pie('#chartPreferences', dataPreferences, optionsPreferences);
 
         Chartist.Pie('#chartPreferences', {
-            labels: ['9-10', '8-9', 'Below 8'],
+            labels: ['Above 50', '30-50', 'Below 30'],
             series: [51, 28, 21]
         });
 

@@ -149,11 +149,6 @@
                                     </form>
                                     </div>
                                     <div class="card-footer ">
-                                        <!-- <div class="legend">
-                                                <i class="fa fa-circle text-info"></i> Open
-                                                <i class="fa fa-circle text-danger"></i> Bounce
-                                                <i class="fa fa-circle text-warning"></i> Unsubscribe
-                                            </div> -->
                                         <hr>
                                         <div class="stats">
                                             <i class="fa fa-clock-o"></i> File uploaded 2 days ago
@@ -352,10 +347,6 @@
     $(document).ready(function () {
         // Javascript method's body can be found in assets/js/demos.js
         demo.initDashboardPageCharts();
-        // $("#loader").css({"margin-top": "-300px;"});
-        // $('#loader').hide();
-
-        // demo.showNotification();
         $('#userfile').on("change", function (e) {
             var files = $(this)[0].files;
             if (files.length == 1) {

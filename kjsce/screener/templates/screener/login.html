@@ -46,11 +46,7 @@
 <body>
     <div class="wrapper">
         <div class="sidebar" data-image="../../static/screener/img/sidebar-5.jpg">
-            <!--
-        Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
 
-        Tip 2: you can also add an image using data-image tag
-    -->
             <div class="sidebar-wrapper">
                 <div class="logo">
                     <a href="http://www.creative-tim.com" class="simple-text">
@@ -109,11 +105,10 @@
                         <div class="card " style="text-align: center">
                             <div class="card-header ">
                                 <h4 class="card-title" style="border-bottom: 1px solid black;">Log In now!</h4>
-                                <!-- <p class="card-category">Use the screening automator platform now!</p> -->
                             </div>
                             <div class="card-body ">
                                 <form method="post" id="myForm" action="{% url 'login' %}" enctype="multipart/form-data">
-                                    {% csrf_token %} 
+                                    {% csrf_token %}
                                     <br>
                                     <div class="form-group">
                                         <label>Username</label>
@@ -129,11 +124,6 @@
                                 </form>
                             </div>
                             <div class="card-footer ">
-                                <!-- <div class="legend">
-                                                <i class="fa fa-circle text-info"></i> Open
-                                                <i class="fa fa-circle text-danger"></i> Bounce
-                                                <i class="fa fa-circle text-warning"></i> Unsubscribe
-                                            </div> -->
                                 <hr>
                                 <div class="stats">
                                     Forgot password? <a href="">Contact Us</a>
@@ -163,10 +153,8 @@
 <script src="../../static/screener/js/demo.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        // Javascript method's body can be found in assets/js/demos.js
         demo.initDashboardPageCharts();
 
-        // demo.showNotification();
         $('#userfile').on("change", function (e) {
             var files = $(this)[0].files;
             if (files.length == 1) {

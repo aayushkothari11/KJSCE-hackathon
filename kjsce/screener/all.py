@@ -46,12 +46,12 @@ def download_file_from_google_drive(id, destination):
 
     response = session.get(URL, params = { 'id' : id }, stream = True)
     token = get_confirm_token(response)
-
     if token:
         params = { 'id' : id, 'confirm' : token }
         response = session.get(URL, params = params, stream = True)
 
     save_response_content(response, destination)
+    print("File Done")
 
 def get_confirm_token(response):
     for key, value in response.cookies.items():
@@ -70,14 +70,16 @@ def save_response_content(response, destination):
 
 
 def get_user_info_git(user_link):
+    g = Github(config('GITHUB_USER'), config('GITHUB_PASS'))
     num_of_repos = 0
     repos = []
     followers = 0
     sample = """"""
     try:
         username = user_link.strip('/').split("/")[-1]
+
         user = g.get_user(username)
-        for r in user.get_repos().sort(key=forks_count, reverse=True):
+        for r in user.get_repos():
             temp = []
             temp.append(r.name)
             sample += r.name + ' '
@@ -87,7 +89,7 @@ def get_user_info_git(user_link):
                 # temp.append(base64.b64decode(r.get_readme().content))
                 sample += str(base64.b64decode(r.get_readme().content)) + ' '
             except GithubException:
-                sample.append('')
+                sample=sample+''
             try:
                 sample += "".join(r.get_topics()) + ' '
             except GithubException:
@@ -104,32 +106,31 @@ def get_user_info_git(user_link):
 
 
 def get_user_info_quora(user_link):
-	print(user_link)
-	print(type(user_link))
-	if(math.isnan(user_link)):
-		return ""
-	else:
-	    driver = webdriver.PhantomJS(service_args=['--ignore-ssl-errors=true', '--ssl-protocol=any'])
-	    driver.get(user_link)
-	    lenOfPage = driver.execute_script("window.scrollTo(0, document.body.scrollHeight);var lenOfPage=document.body.scrollHeight;return lenOfPage;")
-	    match=False
-	    while(match==False):
-	    	lastCount = lenOfPage
-	    	time.sleep(0.5)
-	    	lenOfPage = driver.execute_script("window.scrollTo(0, document.body.scrollHeight); var lenOfPage=document.body.scrollHeight;  return lenOfPage;")
-	    	if lastCount==lenOfPage:
-	    		match=True
+    print(user_link)
+    print(type(user_link))
+    if(str(user_link) == 'nan'):
+        return ""
+    else:
+        driver = webdriver.PhantomJS(service_args=['--ignore-ssl-errors=true', '--ssl-protocol=any'])
+        driver.get(user_link)
+        lenOfPage = driver.execute_script("window.scrollTo(0, document.body.scrollHeight);var lenOfPage=document.body.scrollHeight;return lenOfPage;")
+        match=False
+        while(match==False):
+            lastCount = lenOfPage
+            time.sleep(0.5)
+            lenOfPage = driver.execute_script("window.scrollTo(0, document.body.scrollHeight); var lenOfPage=document.body.scrollHeight;  return lenOfPage;")
+            if lastCount==lenOfPage:
+                match=True
 
-	    html = driver.page_source
+        html = driver.page_source
 
-	    soup = BeautifulSoup(driver.page_source, "lxml")
-
-	    ques_text= soup.find_all('span', {'class': 'TopicNameSpan'})
-	    words = []
-	    for i in range(0,len(ques_text)):
-	        words.append(ques_text[i].get_text())
-
-	    return ', '.join(words)
+        soup = BeautifulSoup(driver.page_source, "lxml")
+        ques_text= soup.find_all('span', {'class': 'TopicNameSpan'})
+        words = []
+        for i in range(0,len(ques_text)):
+            words.append(ques_text[i].get_text())
+        print(words)
+        return ', '.join(words)
 
 
 def final_score(event, keywords):
@@ -143,7 +144,7 @@ def final_score(event, keywords):
 	# keywords = "reactjs, react.js, redux, React.js"
 
 	a=[]
-	output_data = []
+	output = []
 
 	for count in range(infocsv.shape[0]):
 		applicant = Applicant()
@@ -163,17 +164,19 @@ def final_score(event, keywords):
 		print(applicant.resume_link)
 
 		print("RESUME INFO")
-		if __name__ == "__main__":
-		    words = applicant.resume_link.split('/')
-		    file_id = words[len(words)-2]
-		    destination = './templates/screener/resumes/' + applicant.email + '.pdf'
-		    download_file_from_google_drive(file_id, destination)
+		# if __name__ == "__main__":
+		words = applicant.resume_link.split('/')
+		file_id = words[len(words)-2]
+		print("File ID", file_id)
+		destination = './' +file_id + '.pdf'
+		print("Destination:", destination)
+		download_file_from_google_drive(file_id, destination)
 
 		convertapi.api_secret = 'Zgeg7qFLxqDtCAJr'
-		result = convertapi.convert('txt', { 'File': './templates/screener/resumes/' + applicant.email + '.pdf' })
-		result.file.save('./templates/screener/resumes/' + applicant.email + '.txt')
+		result = convertapi.convert('txt', { 'File': './' + file_id + '.pdf' })
+		result.file.save('./')
 
-		f1 = open('./templates/screener/resumes/' + applicant.email + '.txt', "r", encoding="utf8")
+		f1 = open('./' + file_id + '.txt', "r", encoding="utf8")
 		resumeinfo = f1.read()
 		print(resumeinfo)
 		print("="*100)
@@ -193,7 +196,7 @@ def final_score(event, keywords):
 		print("--"*100)
 
 		print("QUORA INFO")
-		quorainfo, extra_data = get_user_info_quora(applicant.quora_url)
+		quorainfo = get_user_info_quora(applicant.quora_url)
 		print(quorainfo)
 		print("="*100)
 		if(quorainfo is not ""):
@@ -216,8 +219,7 @@ def final_score(event, keywords):
 		print("--"*100)
 
 		print("GITHUB INFO")
-		g = Github(config('GITHUB_USER'), config('GITHUB_PASS'))
-		gitinfo = get_user_info_git(applicant.github_url)
+		gitinfo = get_user_info_git(applicant.github_url)[0]
 		print(gitinfo)
 		print("=="*100)
 		try:

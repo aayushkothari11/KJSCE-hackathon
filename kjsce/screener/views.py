@@ -155,7 +155,7 @@ def dashboard(request):
 def user(request, pk):
     applicant = Applicant.objects.get(pk=pk)
     extra_data = get_user_info_git(applicant.github_url)[1]
-    return render(request, 'screener/user.html', {'user': applicant, 'repo_data': extra_data})
+    return render(request, 'screener/user.html', {'applicant': applicant, 'extra_data': extra_data})
 
 @login_required
 def table(request,pk):
