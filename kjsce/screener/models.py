@@ -33,4 +33,4 @@ class Keyword(models.Model):
     event = models.ForeignKey(Event, null=True, blank=True, on_delete=models.CASCADE)
 
     def __str__(self):
-        return word
+        return self.word

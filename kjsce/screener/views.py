@@ -68,7 +68,7 @@ def upload_csv(request):
                 language = language.split(',')
                 skill = skill.split(',')
                 keywords = language+skill
-                
+
                 for keyw in keywords:
                     keyw.strip()
                     key = Keyword(word = keyw, event = obj)
@@ -102,8 +102,7 @@ def upload_csv(request):
         logging.getLogger("error_logger").error("Unable to upload file. "+repr(e))
         messages.error(request,"Unable to upload file. "+repr(e))
     if k==1:
-        redirect_url = '/tables/' + str(obj.pk) + '/'
-        return HttpResponseRedirect(redirect_url)
+        return redirect('table', pk=obj.id)
     return HttpResponseRedirect(reverse("uploadcsv"))
 
 

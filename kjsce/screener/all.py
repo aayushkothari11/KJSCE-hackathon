@@ -157,23 +157,23 @@ def final_score(event, keywords):
 		applicant.quora_url = infocsv.iloc[count,4]
 		applicant.resume_link = str(infocsv.iloc[count,5])
 		applicant.number = infocsv.iloc[count, 6]
-		applicant.event = obj
+		applicant.event = event
 		applicant.save()
-		print("CVLINK")
-		print(cvlink)
+		print("resume_link")
+		print(applicant.resume_link)
 
 		print("RESUME INFO")
 		if __name__ == "__main__":
-		    words = cvlink.split('/')
+		    words = applicant.resume_link.split('/')
 		    file_id = words[len(words)-2]
 		    destination = './templates/screener/resumes/' + applicant.email + '.pdf'
 		    download_file_from_google_drive(file_id, destination)
 
-		convertapi.api_secret = 'Gd31ajmvRrWrmKQv'
+		convertapi.api_secret = 'Zgeg7qFLxqDtCAJr'
 		result = convertapi.convert('txt', { 'File': './templates/screener/resumes/' + applicant.email + '.pdf' })
 		result.file.save('./templates/screener/resumes/' + applicant.email + '.txt')
 
-		f1 = open('./templates/resumes/' + applicant.email + '.txt', "r", encoding="utf8")
+		f1 = open('./templates/screener/resumes/' + applicant.email + '.txt', "r", encoding="utf8")
 		resumeinfo = f1.read()
 		print(resumeinfo)
 		print("="*100)
