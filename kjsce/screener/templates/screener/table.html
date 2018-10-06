@@ -46,7 +46,7 @@
                             <p>Add event</p>
                         </a>
                     </li>
-                    <li>
+                    <!-- <li>
                         <a class="nav-link" href="{% url 'user' %}">
                             <i class="nc-icon nc-circle-09"></i>
                             <p>User Profile</p>
@@ -57,7 +57,7 @@
                             <i class="nc-icon nc-notes"></i>
                             <p>Table List</p>
                         </a>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
         </div>
@@ -116,16 +116,16 @@
                                     <table class="table table-hover table-striped" id="mytable">
                                         <thead>
                                             <th>Name</th>
-                                            <th>College</th>
-                                            <th>Year</th>
+                                            <th>Email</th>
+                                            <th>Number</th>
                                             <th>Score (on a scale of 10)</th>
                                         </thead>
                                         <tbody>
                                             {% for x in applicants %}
                                             <tr>
-                                                <td>name</td>
-                                                <td>D. J. Sanghvi College of Engineering</td>
-                                                <td>Third</td>
+                                                <td>{{x.name}}</td>
+                                                <td>{{x.email}}</td>
+                                                <td>{{x.number}}</td>
                                                 <td>{{x.score}}</td>
                                             </tr>
                                             {% endfor %}
