@@ -20,6 +20,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
 import requests
 import os
+from .all import final_score
 
 @login_required
 def upload_csv(request):
@@ -44,9 +45,9 @@ def upload_csv(request):
             messages.error(request,"Uploaded file is too big (%.2f MB)." % (csv_file.size/(1000*1000),))
             return HttpResponseRedirect(reverse("upload_csv"))
 
-        file_data = csv_file.read().decode("utf-8")
+        # file_data = csv_file.read().decode("utf-8")
 
-        lines = file_data.split("\n")
+        # lines = file_data.split("\n")
         i=0
         data_dict = {}
         data_dict["name"] = name
@@ -65,11 +66,17 @@ def upload_csv(request):
                 language = language.split(',')
                 skill = skill.split(',')
                 keywords = language+skill
+                
                 for keyw in keywords:
                     keyw.strip()
                     key = Keyword(word = keyw, event = obj)
                     key.save()
                 k=1
+
+                temp = [key.word for key in Keyword.objects.filter(event=obj)]
+                temp = ",".join(temp)
+                output_data = final_score(obj, temp)
+
             else:
                 # print(form.errors)
                 print(4)
@@ -78,14 +85,16 @@ def upload_csv(request):
             print(5)
             logging.getLogger("error_logger").error(repr(e))
             pass
+
+
         # here github part
-        for line in lines:
-            if i==0:
-                i=1
-                continue
-            if line == '':
-                break
-            fields = line.split(",")
+        # for line in lines:
+        #     if i==0:
+        #         i=1
+        #         continue
+        #     if line == '':
+        #         break
+        #     fields = line.split(",")
     except Exception as e:
         print(6)
         logging.getLogger("error_logger").error("Unable to upload file. "+repr(e))
