@@ -24,7 +24,7 @@
             <div class="sidebar" data-image="../../static/screener/img/sidebar-5.jpg">
                 <!--
                 Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
-    
+
                 Tip 2: you can also add an image using data-image tag
                 -->
                 <div class="sidebar-wrapper">
@@ -34,26 +34,26 @@
                         </a>
                     </div>
                     <ul class="nav">
-                        <li class="nav-item ">
-                            <a class="nav-link" href="./dashboard.html">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{% url 'dashboard' %}">
                                 <i class="nc-icon nc-chart-pie-35"></i>
                                 <p>Dashboard</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                                <a class="nav-link" href="./add_event.html">
-                                    <i class="nc-icon nc-chart-pie-35"></i>
-                                    <p>Add event</p>
-                                </a>
-                            </li>
-                        <li class="nav-item active">
-                            <a class="nav-link" href="./user.html">
+                            <a class="nav-link" href="{% url 'uploadcsv' %}">
+                                <i class="nc-icon nc-chart-pie-35"></i>
+                                <p>Add event</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="{% url 'user' %}">
                                 <i class="nc-icon nc-circle-09"></i>
                                 <p>User Profile</p>
                             </a>
                         </li>
                         <li>
-                            <a class="nav-link" href="./table.html">
+                            <a class="nav-link" href="{% url 'table' %}">
                                 <i class="nc-icon nc-notes"></i>
                                 <p>Table List</p>
                             </a>
