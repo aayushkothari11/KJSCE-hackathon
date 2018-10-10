@@ -179,7 +179,7 @@ def table(request,pk):
             to_email.append(applicants[i].email)
             number.append(applicants[i].number)
         message = "Your registration has been accepted!!"
-        key = '241331A8wh9vI5SO5bb7c684'
+        key = 'enter key here'
         for i in range(0,len(number)):
             urltosend = 'http://api.msg91.com/api/sendhttp.php?authkey=' + key + '&mobiles=' + str(number[i]) + '&message=' \
                 + message + '&sender=MSGIND&route=4'
@@ -195,7 +195,7 @@ def table(request,pk):
 def send_sms(request):
     number = ["9920776239", "9619227299", "7977529093"]
     message = "Your registration has been accepted!!"
-    key = '241331A8wh9vI5SO5bb7c684'
+    key = 'enter key here'
     for i in range(0,range(len(number))):
         urltosend = 'http://api.msg91.com/api/sendhttp.php?authkey=' + key + '&mobiles=' + number[i] + '&message=' \
             + message + '&sender=MSGIND&route=4'
@@ -205,5 +205,5 @@ def send_sms(request):
     return HttpResponse("done")
 
 
-# export MSG91KEY="241331A8wh9vI5SO5bb7c684"
+# export MSG91KEY="enter key here"
 # copy past this line in env/bin/activate
