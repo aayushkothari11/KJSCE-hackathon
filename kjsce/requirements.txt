@@ -5,7 +5,7 @@ boto==2.49.0
 boto3==1.9.17
 botocore==1.12.17
 bz2file==0.98
-certifi==2018.8.24
+certifi==2022.12.7
 chardet==3.0.4
 convertapi==1.1.0
 dandelion-eu==0.2.2
